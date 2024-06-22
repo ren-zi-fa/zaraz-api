@@ -36,8 +36,9 @@ class ProductController extends Controller
                 'price' => $validatedData['price'],
                 'stock' => $validatedData['stock'],
             ]);
+            $product = Product::orderBy('created_at','DESC')->first();
             ProductCategory::create([
-                'product_id'=>$validatedData['product_id'],
+                'product_id'=>$product->product_id,
                 'category_id'=>$validatedData['category_id']
             ]);
 
