@@ -18,7 +18,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $product = ProductCategory::with(['getCategoryName:category_id,category_name', 'product:product_id,product_name,stock'])->get();
+        // $product = ProductCategory::with(['getCategoryName:category_id,category_name', 'product:product_id,product_name,stock'])->get();
+        // return ProductResource::collection($product);
+
+        $product = Product::get();
         return ProductResource::collection($product);
     }
 
@@ -35,11 +38,6 @@ class ProductController extends Controller
                 'product_description' => $validatedData['product_description'],
                 'price' => $validatedData['price'],
                 'stock' => $validatedData['stock'],
-            ]);
-            $product = Product::orderBy('created_at','DESC')->first();
-            ProductCategory::create([
-                'product_id'=>$product->product_id,
-                'category_id'=>$validatedData['category_id']
             ]);
 
             return response()->json(['message' => 'Product created successfully'], 201);
